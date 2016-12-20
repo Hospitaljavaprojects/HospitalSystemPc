@@ -1,0 +1,240 @@
+package com.user;
+import java.awt.EventQueue;
+import javax.swing.JFrame;
+import java.awt.FlowLayout;
+import javax.swing.JPanel;
+import java.awt.Component;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import java.awt.Dimension;
+import java.awt.Rectangle;
+import java.awt.Color;
+import java.awt.GridLayout;
+import javax.swing.JComboBox;
+import javax.swing.UIManager;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JRadioButton;
+import javax.swing.JCheckBox;
+import javax.swing.JButton;
+import java.awt.Font;
+import java.awt.event.ActionListener;
+import java.sql.*;
+import java.awt.event.ActionEvent;
+
+public class AppointmentFrame {
+	private int pid;
+	private String panme;
+	private String psex;
+	private int page;
+	private String ptel;
+	private String pdesk;
+	private String pdate;
+	private String ispay;
+	private String isres;
+	private JFrame frame;
+	private JLabel lblNewLabel;
+	private JTextField txtname;
+	private JTextField txtage;
+	private JTextField txtphone;
+	private JTextField txtdate;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					AppointmentFrame window = new AppointmentFrame();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public AppointmentFrame() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.setBounds(100, 100, 450, 300);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(new GridLayout(0, 2, 0, 0));
+		
+		JPanel p0 = new JPanel();
+		p0.setBackground(new Color(135, 206, 235));
+		frame.getContentPane().add(p0);
+		p0.setLayout(null);
+		
+		JLabel label_4 = new JLabel("\u95E8\u8BCA\u9884\u7EA6");
+		label_4.setFont(new Font("��������", Font.BOLD, 25));
+		label_4.setBounds(53, 78, 126, 72);
+		p0.add(label_4);
+		
+		JPanel p1 = new JPanel();
+		frame.getContentPane().add(p1);
+		p1.setBackground(new Color(135, 206, 235));
+		p1.setLayout(null);
+		
+		lblNewLabel = new JLabel("\u59D3\u540D");
+		lblNewLabel.setBounds(61, 45, 24, 15);
+		p1.add(lblNewLabel);
+		
+		txtname = new JTextField();
+		txtname.setBounds(90, 42, 66, 21);
+		p1.add(txtname);
+		txtname.setColumns(10);
+		
+		JLabel label = new JLabel("\u6027\u522B");
+		label.setBounds(61, 73, 24, 15);
+		p1.add(label);
+		
+		JLabel label_1 = new JLabel("\u5E74\u9F84");
+		label_1.setBounds(61, 98, 25, 15);
+		p1.add(label_1);
+		
+		txtage = new JTextField();
+		txtage.setBounds(90, 95, 66, 21);
+		p1.add(txtage);
+		txtage.setColumns(10);
+		
+		JLabel lblNewLabel_1 = new JLabel("\u8054\u7CFB\u65B9\u5F0F");
+		lblNewLabel_1.setBounds(31, 129, 54, 15);
+		p1.add(lblNewLabel_1);
+		
+		txtphone = new JTextField();
+		txtphone.setBounds(90, 126, 66, 21);
+		p1.add(txtphone);
+		txtphone.setColumns(10);
+		
+		JLabel label_2 = new JLabel("\u9884\u7EA6\u65F6\u95F4");
+		label_2.setBounds(31, 157, 54, 15);
+		p1.add(label_2);
+		
+		txtdate = new JTextField();
+		txtdate.setBounds(90, 151, 66, 21);
+		p1.add(txtdate);
+		txtdate.setColumns(10);
+		
+		JLabel label_3 = new JLabel("\u9884\u7EA6\u79D1\u5BA4");
+		label_3.setBounds(31, 182, 54, 15);
+		p1.add(label_3);
+		
+		JComboBox cBdesk = new JComboBox();
+		cBdesk.setBounds(90, 182, 66, 21);
+		cBdesk.setModel(new DefaultComboBoxModel(new String[] {"\u5185\u79D1", "\u5916\u79D1"}));
+		p1.add(cBdesk);
+		
+		JButton btnyes = new JButton("\u9884\u7EA6");
+		btnyes.addActionListener(new ActionListener() {//ԤԼ�ύ��Ϣ����
+			public void actionPerformed(ActionEvent arg0) {
+				//�ж���������
+				if(txtname.getText().length()==0
+					||txtage.getText().length()==0
+					||txtphone.getText().length()==0
+					||txtdate.getText().length()==0)
+				{
+					 JOptionPane.showMessageDialog(null, "����,����,��ϵ��ʽ��ԤԼʱ�䶼����Ϊ��!",
+						      "����", JOptionPane.WARNING_MESSAGE);
+				}
+				else
+				{
+					//�������ݿ�
+					Connection con =null;
+					try {
+						Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");//ע����Сд��ƴд
+					} catch (ClassNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					//�������ݿ�
+					try {
+						con=DriverManager.getConnection("jdbc:sqlserver://localhost:1433; DatabaseName=Hospital","sa","sql9410..");
+						//con=DriverManager.getConnection("jdbc:sqlserver://localhost(����IP��ַ���������ӵ�IP��ַ):1433;DatabaseName=dbname","user","passeord");
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					/*if(con!=null)
+						System.out.print("���ӳɹ���");*/
+					
+					Statement st=null;
+					try {
+						st=con.createStatement();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					//������������
+					String sqlins="insert into patient(pname,psex,page,ptel,pdesk,pdate,ispay) values('"+txtname.getText()+"','��','"+txtage.getText()+"','"+txtphone.getText()+"','�ڿ�','10:00','0')";
+					//�ر����ݿ�
+					ResultSet rs=null;
+					try {
+					//	st.executeUpdate(sql);//��ʹ�� insert update ..�����޸����ݿ�
+						rs=st.executeQuery(sqlins);//�������ݣ��᷵��һ��ResultSet���������󣨶�ά����
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+					try {
+						st.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}//
+					
+					try {
+						con.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}//con.close
+					
+					try {
+						rs.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}//rs.close
+				}
+				
+			}
+		});
+		btnyes.setBounds(31, 228, 72, 23);
+		p1.add(btnyes);
+		
+		JButton btnCancel = new JButton("\u53D6\u6D88");
+		btnCancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//��������Ϣ�ı����е�����
+				txtname.setText(null);
+				txtage.setText(null);
+				txtphone.setText(null);
+				txtdate.setText(null);
+			}
+		});
+		btnCancel.setBounds(113, 228, 77, 23);
+		p1.add(btnCancel);
+		
+		JComboBox cBsex = new JComboBox();
+		cBsex.setBounds(90, 70, 64, 21);
+		cBsex.setModel(new DefaultComboBoxModel(new String[] {"\u7537", "\u5973"}));
+		p1.add(cBsex);
+		
+		JLabel label_5 = new JLabel("    \u586B\u5199\u9884\u7EA6\u4FE1\u606F");
+		label_5.setFont(new Font("����", Font.PLAIN, 15));
+		label_5.setBounds(31, 10, 159, 25);
+		p1.add(label_5);
+	}
+}
