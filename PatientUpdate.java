@@ -18,7 +18,7 @@ public class PatientUpdate extends JPanel implements ActionListener{
 			    }
 			   catch(ClassNotFoundException e){}
 			    try{
-			     con=DriverManager.getConnection("jdbc:sqlserver://localhost:1433;DatabaseName=patient");
+			     con=DriverManager.getConnection("jdbc:sqlserver://localhost:1433;DatabaseName=Hospital","sa","sa");
 			     sql=con.createStatement();
 			    }
 			    catch(SQLException ee){}
@@ -86,7 +86,7 @@ public class PatientUpdate extends JPanel implements ActionListener{
 		   if(e.getSource()==b1){
 		       try{
 		        String id, name, gender, address, phone, office,doctor;
-		           con=DriverManager.getConnection("jdbc:sqlserver://localhost:1433;DatabaseName=patient");
+		           con=DriverManager.getConnection("jdbc:sqlserver://localhost:1433;DatabaseName=Hospital","sa","sa");
 		           id=t1.getText().trim();
 		           ResultSet rs=sql.executeQuery("SELECT * FROM patient where id='"+id+"'");
 		           if(rs.next()){
@@ -136,7 +136,7 @@ public class PatientUpdate extends JPanel implements ActionListener{
 		   String s6="'"+t6.getText().trim()+"'";
 		   String s7="'"+t7.getText().trim()+"'";
 		   String temp="UPDATE student SET name ="+s2+", gender="+s3+", address="+s4+", phone="+s5+", office="+s6+", doctor="+s7+" WHERE id="+s1;
-		   con=DriverManager.getConnection("jdbc:sqlserver://localhost:1433;DatabaseName=patient");
+		   con=DriverManager.getConnection("jdbc:sqlserver://localhost:1433;DatabaseName=Hospital","sa","sa");
 		   sql.executeQuery(temp);
 		   JOptionPane.showMessageDialog(this,"修改成功!","提示对话框",JOptionPane.INFORMATION_MESSAGE);        	
 		   con.close();

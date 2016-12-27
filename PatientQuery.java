@@ -19,7 +19,7 @@ public class PatientQuery extends JPanel implements ActionListener{
 			    }
 			   catch(ClassNotFoundException e){}
 			    try{
-			     con=DriverManager.getConnection("jdbc:sqlserver://localhost:1433;DatabaseName=patient");
+			     con=DriverManager.getConnection("jdbc:sqlserver://localhost:1433;DatabaseName=Hospital","sa","sa");
 			     sql=con.createStatement();
 			    }
 			    catch(SQLException ee){}
@@ -88,7 +88,7 @@ public class PatientQuery extends JPanel implements ActionListener{
 		  }
 		  public void query() throws SQLException{
 		   String id, name, gender, address, phone, office,doctor;
-		   con=DriverManager.getConnection("jdbc:sqlserver://localhost:1433;DatabaseName=patient");
+		   con=DriverManager.getConnection("jdbc:sqlserver://localhost:1433;DatabaseName=Hospital");
 		   id=t1.getText().trim();
 		   ResultSet rs=sql.executeQuery("SELECT * FROM patient where id='"+id+"'");
 		   
