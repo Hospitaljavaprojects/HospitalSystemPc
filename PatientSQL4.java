@@ -33,7 +33,7 @@ public class PatientSQL4 {
 		}		
        
 		//添加数据
-		strTemp = "insert into patient values('ZhangSan','张三','男','太原市迎泽西大街79号','13803511208','骨科','王大夫')";
+		strTemp = "insert into patient values('ZhangSan','张三','男','太原市迎泽西大街79号','13803511208','骨科','王大夫',500)";
 		try {
 			stmt.executeUpdate(strTemp);
 		} catch (SQLException e) {
@@ -53,6 +53,7 @@ public class PatientSQL4 {
 				System.out.println(rs.getString("phone"));
 				System.out.println(rs.getString("office"));
 				System.out.println(rs.getString("doctor"));
+				System.out.println(rs.getString("ispay"));
 			}
 			
 		} catch (SQLException e) {

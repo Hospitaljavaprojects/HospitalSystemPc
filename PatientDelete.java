@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
 public class PatientDelete  extends JPanel implements ActionListener{
 	Connection con;
 	Statement sql;
-	JTextField t1, t2, t3, t4, t5, t6,t7;
+	JTextField t1, t2, t3, t4, t5, t6,t7,t8;
 	JButton b;
 	Box baseBox, bv1, bv2;
 	
@@ -36,12 +36,14 @@ public class PatientDelete  extends JPanel implements ActionListener{
 		t5 = new JTextField(16);
 		t6 = new JTextField(16);
 		t7 = new JTextField(16);
+		t8= new JTextField(16);
 		t2.setEditable(false);
 		t3.setEditable(false);
 		t4.setEditable(false);
 		t5.setEditable(false);
 		t6.setEditable(false);
 		t7.setEditable(false);
+		t8.setEditable(false);
 		JPanel p1 = new JPanel(), p2 = new JPanel();
 		p1.add(new JLabel("输入要删除病人的用户名"));
 		p1.add(t1);
@@ -59,6 +61,8 @@ public class PatientDelete  extends JPanel implements ActionListener{
 		bv1.add(Box.createVerticalStrut(8));
 		bv1.add(new JLabel("医生"));
 		bv1.add(Box.createVerticalStrut(8));
+		bv1.add(new JLabel("收费"));
+		bv1.add(Box.createVerticalStrut(8));
 		bv2 = Box.createVerticalBox();
 		bv2.add(t2);
 		bv2.add(Box.createVerticalStrut(8));
@@ -71,6 +75,8 @@ public class PatientDelete  extends JPanel implements ActionListener{
 		bv2.add(t6);
 		bv2.add(Box.createVerticalStrut(8));
 		bv2.add(t7);
+		bv2.add(Box.createVerticalStrut(8));
+		bv2.add(t8);
 		bv2.add(Box.createVerticalStrut(8));
 		baseBox = Box.createHorizontalBox();
 		baseBox.add(bv1);
@@ -101,7 +107,7 @@ public class PatientDelete  extends JPanel implements ActionListener{
 				try {
 					String s1 = "'" + t1.getText().trim() + "'";
 					String temp = "DELETE FROM student WHERE id=" + s1;
-					con = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;DatabaseName=patient");
+					con = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;DatabaseName=Hospital","sa","sa");
 					sql.executeUpdate(temp);
 					JOptionPane.showMessageDialog(this, "删除成功!", "提示对话框",
 							JOptionPane.INFORMATION_MESSAGE);
@@ -114,8 +120,8 @@ public class PatientDelete  extends JPanel implements ActionListener{
 	}
 
 	public void delete() throws SQLException {
-		String id, name, gender, address, phone, office,doctor;
-		con = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;DatabaseName=patient");
+		String id, name, gender, address, phone, office,doctor,ispay;
+		con = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;DatabaseName=Hospital","sa","sa");
 		id = t1.getText().trim();
 		ResultSet rs = sql.executeQuery("SELECT * FROM patient where id='"
 				+ id + "'");
@@ -127,6 +133,7 @@ public class PatientDelete  extends JPanel implements ActionListener{
 			phone = rs.getString("phone");
 			office = rs.getString("office");
 			doctor = rs.getString("dotor");
+			ispay = rs.getString("ispay");
 			// if(id.equals(t1.getText().trim())){
 			t2.setText(name);
 			t3.setText(gender);
@@ -134,6 +141,7 @@ public class PatientDelete  extends JPanel implements ActionListener{
 			t5.setText(phone);
 			t6.setText(office);
 			t7.setText(doctor);
+			t7.setText(ispay);
 			// break;
 			// }
 		} else {

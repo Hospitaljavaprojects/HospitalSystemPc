@@ -13,7 +13,7 @@ public class PatientAdd extends JPanel implements ActionListener{
 	Connection con;
 	  Statement sql;
 	  JButton b1,b2;
-	  JTextField tf1,tf2,tf3,tf4,tf5,tf6,tf7;
+	  JTextField tf1,tf2,tf3,tf4,tf5,tf6,tf7,tf8;
 	  Box baseBox,bv1,bv2;
 	  PatientAdd(){
 		  try{
@@ -35,6 +35,7 @@ public class PatientAdd extends JPanel implements ActionListener{
 			   tf5=new JTextField(16);
 			   tf6=new JTextField(16);
 			   tf7=new JTextField(16);
+			   tf8=new JTextField(16);
 			   b1=new JButton("录入");  
 			   b2=new JButton("重置");
 			   b1.addActionListener(this);
@@ -56,6 +57,8 @@ public class PatientAdd extends JPanel implements ActionListener{
 			   bv1.add(Box.createVerticalStrut(8));
 			   bv1.add(new JLabel("医生"));
 			   bv1.add(Box.createVerticalStrut(8));
+			   bv1.add(new JLabel("收费"));
+			   bv1.add(Box.createVerticalStrut(8));
 			   bv2=Box.createVerticalBox();
 			   bv2.add(tf1);
 			   bv2.add(Box.createVerticalStrut(8));
@@ -70,6 +73,8 @@ public class PatientAdd extends JPanel implements ActionListener{
 			   bv2.add(tf6);
 			   bv2.add(Box.createVerticalStrut(8));
 			   bv2.add(tf7);
+			   bv2.add(Box.createVerticalStrut(8));
+			   bv2.add(tf8);
 			   bv2.add(Box.createVerticalStrut(8));
 			   baseBox=Box.createHorizontalBox();
 			   baseBox.add(bv1);
@@ -95,6 +100,7 @@ public class PatientAdd extends JPanel implements ActionListener{
 		       tf5.setText(" ");
 		       tf6.setText(" ");
 		       tf7.setText(" ");
+		       tf8.setText(" ");
 		   }
 		  }
 		  public void insert() throws SQLException{
@@ -105,7 +111,8 @@ public class PatientAdd extends JPanel implements ActionListener{
 		   String s5="'"+tf5.getText().trim()+"'";
 		   String s6="'"+tf6.getText().trim()+"'";
 		   String s7="'"+tf7.getText().trim()+"'";
-		   String temp="INSERT INTO patient VALUES ("+s1+","+s2+","+s3+","+s4+","+s5+","+s6+","+s7+")";
+		   String s8="'"+tf8.getText().trim()+"'";
+		   String temp="INSERT INTO patient VALUES ("+s1+","+s2+","+s3+","+s4+","+s5+","+s6+","+s7+","+s8+")";
 		    con=DriverManager.getConnection("jdbc:sqlserver://localhost:1433;DatabaseName=Hospital","sa","sa");
 		    sql.executeQuery(temp);
 		   con.close();

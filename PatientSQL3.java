@@ -23,7 +23,7 @@ public class PatientSQL3 {
 		}
 		
 		strTemp="CREATE TABLE patient(id varchar(20) PRIMARY KEY,name varchar(20),gender varchar(5),address varchar(50),"
-				+"phone varchar(50),office varchar(10),doctor varchar(10)";
+				+"phone varchar(50),office varchar(10),doctor varchar(10),ispay varchar(50)";
 		try{
 			stmt.executeUpdate(strTemp);
 			System.out.println("数据库表建立成功！");
