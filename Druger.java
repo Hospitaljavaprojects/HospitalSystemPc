@@ -96,7 +96,7 @@ public class Druger extends JFrame{
    		e.printStackTrace();
    	}
    // 将查询获得的记录数据，转换成适合生成JTable的数据形式
-       Object[][] info = new Object[c][6];
+       Object[][] info = new Object[c][5];
        c = 0;
        try {
    		while(rs.next()){
@@ -105,7 +105,6 @@ public class Druger extends JFrame{
    		info[c][2] = rs.getString("drugbrief");
    		info[c][3] = Integer.valueOf( rs.getInt("count") );
    		info[c][4] = rs.getString("tottalprice");
-   		info[c][5] = rs.getString("ispay");
    		c++;
    		}
    	} catch (SQLException e) {
@@ -113,7 +112,7 @@ public class Druger extends JFrame{
    		e.printStackTrace();
    	}
    // 定义表头
-       String[] title = {"病人编号","医生编号","药品简称","数量","总价","是否付费"};
+       String[] title = {"病人编号","医生编号","药品简称","数量","总价"};
    // 创建JTable
        this.tab = new JTable(info,title);
    // 显示表头
@@ -202,7 +201,7 @@ public void btndeal_ActionPerformed(ActionEvent ae){
 	// TODO Auto-generated catch block
 	e.printStackTrace();
 }
-  String sql1="select * from drug";
+  String sql1="select drugnum from drug where drugbrief='aspl'";
   ResultSet rs1=null;
   try {
 	rs1=st.executeQuery(sql1);
@@ -219,7 +218,7 @@ public void btndeal_ActionPerformed(ActionEvent ae){
 	// TODO Auto-generated catch block
 	e.printStackTrace();
 }
-String sql2="select count(count) as count from recipe_drug join drug on drug.drugbrief=recipe_drug.drugbrief";
+String sql2="select sum(count) as count from recipe_drug where drugbrief='aspl'";
   ResultSet rs2=null;
   try {
 	rs2=st.executeQuery(sql2);
@@ -236,9 +235,50 @@ String sql2="select count(count) as count from recipe_drug join drug on drug.dru
 	// TODO Auto-generated catch block
 	e.printStackTrace();
 }
-  String sql3="update drug set drugnum="+(drugnum1-count1)+"where exists(select drugbrief from recipe_drug where drug.drugbrief=recipe_drug.drugbrief)";
+  String sql3="update drug set drugnum="+(drugnum1-count1)+"where drugbrief='aspl'";
   try {
 	st.executeUpdate(sql3);
+} catch (SQLException e1) {
+	// TODO Auto-generated catch block
+	e1.printStackTrace();
+}
+  String sql4="select drugnum from drug where drugbrief='gml'";
+  ResultSet rs4=null;
+  try {
+	rs4=st.executeQuery(sql4);
+} catch (SQLException e1) {
+	// TODO Auto-generated catch block
+	e1.printStackTrace();
+}
+  int drugnum2 = 0;
+  try {
+	while(rs4.next()){
+		drugnum2 = Integer.valueOf(rs4.getInt("drugnum"));
+    }
+} catch (SQLException e) {
+	// TODO Auto-generated catch block
+	e.printStackTrace();
+}
+String sql5="select sum(count) as count from recipe_drug where drugbrief='gml'";
+  ResultSet rs3=null;
+  try {
+	rs3=st.executeQuery(sql5);
+} catch (SQLException e1) {
+	// TODO Auto-generated catch block
+	e1.printStackTrace();
+}
+  int count2 = 0;
+  try {
+	while(rs3.next()){
+		count2 = Integer.valueOf(rs3.getInt("count"));
+	  }
+} catch (SQLException e) {
+	// TODO Auto-generated catch block
+	e.printStackTrace();
+}
+  String sql6="update drug set drugnum="+(drugnum2-count2)+"where drugbrief='gml'";
+  try {
+	st.executeUpdate(sql6);
 } catch (SQLException e1) {
 	// TODO Auto-generated catch block
 	e1.printStackTrace();
